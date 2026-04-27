@@ -1,0 +1,130 @@
+
+" =========================
+" BASIC SETTINGS
+" =========================
+set nocompatible
+
+filetype plugin indent on
+syntax on
+
+set number
+set relativenumber
+set mouse=a
+set clipboard=unnamedplus
+set updatetime=300
+set timeoutlen=400
+set signcolumn=yes
+set termguicolors
+set cursorline
+set scrolloff=8
+set sidescrolloff=8
+set splitright
+set splitbelow
+set noshowmode
+set nowrap
+
+" =========================
+" EDITING
+" =========================
+set smartindent
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" =========================
+" UNDO
+" =========================
+set undofile
+set undodir=~/.config/nvim/undo
+
+" =========================
+" UI CLEANUP
+" =========================
+set noswapfile
+set nobackup
+set nowritebackup
+set fillchars=eob:\
+
+" =========================
+" TRANSPARENCY
+" =========================
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NormalNC guibg=NONE ctermbg=NONE
+highlight SignColumn guibg=NONE ctermbg=NONE
+highlight EndOfBuffer guibg=NONE ctermbg=NONE
+highlight LineNr guibg=NONE ctermbg=NONE
+highlight FoldColumn guibg=NONE ctermbg=NONE
+highlight VertSplit guibg=NONE ctermbg=NONE
+highlight StatusLine guibg=NONE ctermbg=NONE
+highlight StatusLineNC guibg=NONE ctermbg=NONE
+highlight NormalFloat guibg=NONE ctermbg=NONE
+
+" =========================
+" LEADER
+" =========================
+let mapleader=" "
+let maplocalleader=" "
+
+" =========================
+" KEYMAPS
+" =========================
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>h :nohlsearch<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" =========================
+" PLUGINS
+" =========================
+call plug#begin('~/.local/share/nvim/plugged')
+
+" Utility
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" File tree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
+" =========================
+" FZF
+" =========================
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :Rg<CR>
+nnoremap <leader>fb :Buffers<CR>
+
+" =========================
+" NERDTREE
+" =========================
+nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>o :NERDTreeFocus<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
+
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+let g:NERDTreeGitStatusWithFlags = 1
+let NERDTreeQuitOnOpen=1
+
+" =========================
+" AUTO OPEN NERDTREE
+" =========================
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd BufEnter * if winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree() | quit | endif
